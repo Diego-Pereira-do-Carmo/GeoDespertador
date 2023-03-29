@@ -6,21 +6,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
+  <script defer src="./interface.js"></script>
   <script defer src="./script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/geolib/dist/geolib.min.js"></script>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" defer=""></script>
- 
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
-  <link rel="shortcut icon" type="image/svg" href="./compass.svg">
+  <link rel="shortcut icon" type="image/svg" href="./img/logo.svg">
   <title>PRATICA</title>
 </head>
 
@@ -29,30 +29,20 @@
     <header
       class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
       <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-        <svg width="40" height="40" fill="#0d6efd" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg width="60" height="60" fill="#0d6efd" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 13.125a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z"></path>
           <path
-            d="M22.5 6a3 3 0 0 0-3-3h-.75v-.73c0-.404-.31-.75-.714-.77a.75.75 0 0 0-.786.749V3H6.75v-.73c0-.404-.31-.75-.714-.77a.75.75 0 0 0-.786.749V3H4.5a3 3 0 0 0-3 3v.562a.187.187 0 0 0 .188.188h20.625a.188.188 0 0 0 .187-.188V6Z">
-          </path>
-          <path
-            d="M1.5 19.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.39a.14.14 0 0 0-.14-.14H1.64a.14.14 0 0 0-.14.14V19.5Zm16.125-9.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Zm0 3.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Zm-3.75-3.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Zm0 3.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Zm0 3.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Zm-3.75-3.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Zm0 3.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Zm-3.75-3.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Zm0 3.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Z">
+            d="M12 2.25c-5.376 0-9.75 4.374-9.75 9.75s4.374 9.75 9.75 9.75 9.75-4.374 9.75-9.75S17.376 2.25 12 2.25Zm4.925 5.312-2.197 5.494a3.002 3.002 0 0 1-1.672 1.672l-5.494 2.197a.376.376 0 0 1-.487-.487l2.197-5.494a3 3 0 0 1 1.672-1.672l5.494-2.197a.375.375 0 0 1 .487.487Z">
           </path>
         </svg>
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">Contatos</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">Sobre Nós</a></li>
+        <li><a href="#containerLogin" class="nav-link px-2 link-secondary">Me lembrar</a></li>
+        <li><a href="#containerRegistrar" class="nav-link px-2 link-dark">Ver o Mapa</a></li>
+        <li><a href="https://www.linkedin.com/in/diego-pereira-do-carmo/" class="nav-link px-2 link-dark">Contatos</a></li>
       </ul>
 
-      <div class="col-md-3 text-end">
-        <a href="#containerLogin">
-          <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        </a>
-        <a href="#containerRegistrar">
-          <button type="button" class="btn btn-primary">Registrar-se</button>
-        </a>
-      </div>
     </header>
   </div>
   <div class="b-example-divider"></div>
@@ -107,10 +97,11 @@
     <div class="b-example-divider"></div>
 
     <div id="containerRegistrar" class="container col-xl-10 col-xxl-8 px-4 py-5">
-
       <div class="row align-items-center g-lg-5 py-5">
-        <div id="mapid" style="height: 100vh;"></div>
+        <div id="firstMap" style="height: 90vh;"></div>
+        <div id="secondMap" style="height: 90vh; display: none;"></div>
       </div>
+      <button id="btnAlarme" class=" btn btn-primary btn-lg px-4 me-md-2 fw-bold" onclick="stopAudio()">Parar Alarme</button>
     </div>
     <div class="b-example-divider"></div>
 

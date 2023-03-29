@@ -6,17 +6,12 @@ const alarme = new Audio('./sound/alarme.mp3');
 // Configura as opções para a notificação
 const notificationOptions = {
   body: 'Você está aproximadamente à 500 metros do endereço desejado!',
-  icon: './compass.png'
+  icon: './img/logo.svg'
 };
 
-
-window.OneSignal = window.OneSignal || [];
-OneSignal.push(function() {
-  OneSignal.init({
-    appId: "2002682b-5624-4182-ae42-c250745a64df",
-  });
-});
-
+function stopAudio(){
+  alarme.pause();
+}
 
 const btnBusca = document.getElementById('btnBusca');
 
@@ -38,11 +33,26 @@ async function convertAdressInCoords() {
       latitude: latitudeConvert,
       longitude: longitudeConvert
     }
-    handleCoords();
+    hiddenFirstMap();
   } catch (error) {
     console.log('Coordenadas Não Encontradas Verifique o Endereço')
   }
 }
+
+navigator.geolocation.getCurrentPosition((position) => {
+  let currentLatitude = position.coords.latitude;
+  let currentLongitude = position.coords.longitude;
+
+  let firstMap = L.map("firstMap").setView([currentLatitude, currentLongitude], 15);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "Map data &copy; OpenStreetMap contributors",
+    maxZoom: 18,
+  }).addTo(firstMap);
+
+  let latlng = L.latLng(currentLatitude, currentLongitude);
+  let marker = L.marker([currentLatitude, currentLatitude]).addTo(firstMap);
+  marker.setLatLng(latlng);
+})
 
 
 async function handleCoords() {
@@ -62,12 +72,9 @@ function monitorarLocalizacao() {
       longitude: position.coords.longitude
     };
 
-    // function updateMarker(currentLatitude, currentLongitude) {
-    //   let latlng = L.latLng(currentLatitude, currentLongitude);
-    //   let marker = L.marker([latitude, longitude]).addTo(map);
-    //   marker.setLatLng(latlng);
-    // }
-    // updateMarker(currentCoords.latitude, currentCoords.longitude)
+    // let latlng = L.latLng(currentCoords.latitude, currentCoords.longitude);
+    // let marker = L.marker([currentCoords.latitude, currentCoords.longitude]).addTo(firstMap);
+    // marker.setLatLng(latlng);
 
     // Calcula a distância entre as coordenadas atuais e as do endereço desejado
     const distance = geolib.getDistance(currentCoords, targetCoords);
@@ -76,7 +83,7 @@ function monitorarLocalizacao() {
     if (distance < 500) {
       // Envia uma notificação para o usuário
       navigator.vibrate([500, 200, 500]);
-      
+
       alarme.play();
       Notification.requestPermission().then(permission => {
         if (permission == 'granted') {
@@ -89,14 +96,12 @@ function monitorarLocalizacao() {
 }
 
 
-
 function renderMap(fromLatitude, fromLongitude, toLatitude, toLongitude) {
-  var map = L.map("mapid").setView([fromLatitude, fromLongitude], 13); 
-  // 13
+  let secondMap = L.map("secondMap").setView([fromLatitude, fromLongitude], 13);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "Map data &copy; OpenStreetMap contributors",
     maxZoom: 18,
-  }).addTo(map);
+  }).addTo(secondMap);
 
   L.Routing.control({
     waypoints: [
@@ -107,6 +112,6 @@ function renderMap(fromLatitude, fromLongitude, toLatitude, toLongitude) {
       serviceUrl: "https://router.project-osrm.org/route/v1/",
       profile: "foot",
     }),
-  }).addTo(map);
+  }).addTo(secondMap);
   monitorarLocalizacao();
 }
